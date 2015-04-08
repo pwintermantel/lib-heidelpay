@@ -11,7 +11,9 @@ trait Configurable {
     foreach ($config as $key => $val) {
       if (is_array($val)) {
         $className = "\\Pwintermantel\\LibHeidelpay\\Transaction\\Parameters\\" . $this->normalizeKey($key);
-        $val = new $className($val);
+        $orgVal = $val;
+        $val = new $className();
+        $val->setConfig($orgVal);
       } 
       $this->{'set' . $this->normalizeKey($key)}($val);
     }

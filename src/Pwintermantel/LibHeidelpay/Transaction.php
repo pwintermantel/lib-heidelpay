@@ -9,6 +9,7 @@ namespace Pwintermantel\LibHeidelpay;
 class Transaction {
 
   use Behavior\Configurable;
+  use Behavior\Postable;
 
   /**
    * @var string
@@ -20,6 +21,8 @@ class Transaction {
    */
   private $account = null;
 
+  
+  private $httpClient = null;
 
   /**
    * @param array $config Configuration Array
@@ -29,8 +32,24 @@ class Transaction {
     if (is_array($config)) {
       $this->setConfig($config); 
     }
+    $this->setHttpClient(new \GuzzleHttp\Client());
   }
 
+
+  public function send() {
+    $client = $this->getHttpClient();
+    $this->collectParams();
+     
+  }
+
+
+  public function setHttpClient($client) {
+    $this->httpClient = $client;
+  }
+
+  public function getHttpClient() {
+    return $this->httpClient;
+  }
 
 
   /**
@@ -50,7 +69,19 @@ class Transaction {
   }
 
 
+  /**
+   * @param Transaction\Parameters\Account $account
+   * @retur void
+   */
   public function setAccount(Transaction\Parameters\Account $account) {
    $this->account = $account;
+  } 
+
+
+  /**
+   * @return Transaction\Parameters\Account 
+   */
+  public function getAccount() {
+    return $this->account;
   } 
 }
