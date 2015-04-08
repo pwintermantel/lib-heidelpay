@@ -14,19 +14,6 @@ class Account extends AbstractParameters implements ParametersInterface {
   /**
    * @var string 
    */
-  private $holder;
+  var $holder;
  
-  /*
-   * @param string $holder
-   */
-  public function setHolder($holder) {
-    $this->holder = $holder;
-  } 
-
-  /*
-   * @return string $holder
-   */
-  public function getHolder() {
-    return $this->holder;
-  } 
 }

@@ -14,15 +14,79 @@ class Transaction {
   /**
    * @var string
    */
-  private $endpointUrl = null;
+  var $endpointUrl = null;
+
 
   /**
    * @var Transaction\Parameters\Account
    */
-  private $account = null;
+  var $account = null;
+
+
+  /**
+   * @var Transaction\Parameters\Address
+   */
+  var $address = null;
+
+
+  /**
+   * @var Transaction\Parameters\Contact
+   */
+  var $contact = null;
+  
+   
+  /**
+   * @var Transaction\Parameters\Frontend
+   */
+  var $frontend = null;
+
+
+  /**
+   * @var Transaction\Parameters\Identification
+   */
+  var $identification = null;
+
+
+  /**
+   * @var Transaction\Parameters\Name
+   */
+  var $name = null;
+
+
+  /**
+   * @var Transaction\Parameters\Payment
+   */
+  var $payment = null;
+
+
+  /**
+   * @var Transaction\Parameters\Presentation
+   */
+  var $presentation = null;
+
+
+  /**
+   * @var Transaction\Parameters\Request
+   */
+  var $request = null;
 
   
-  private $httpClient = null;
+  /**
+   * @var Transaction\Parameters\Security
+   */
+  var $security = null;
+
+
+  /**
+   * @var Transaction\Parameters\Transaction
+   */
+  var $transaction = null;
+
+
+  /**
+   * @var \GuzzleHttp\Client
+   */
+  var $httpClient = null;
 
   /**
    * @param array $config Configuration Array
@@ -39,7 +103,6 @@ class Transaction {
   public function send() {
     $client = $this->getHttpClient();
     $this->collectParams();
-     
   }
 
 
@@ -50,38 +113,4 @@ class Transaction {
   public function getHttpClient() {
     return $this->httpClient;
   }
-
-
-  /**
-   * @param string $url
-   * @return void
-   */
-  public function setEndpointUrl($url) {
-    $this->endpointUrl = $url;
-  }
- 
-
-  /**
-   * @return string $url
-   */
-  public function getEndpointUrl() {
-    return $this->endpointUrl;
-  }
-
-
-  /**
-   * @param Transaction\Parameters\Account $account
-   * @retur void
-   */
-  public function setAccount(Transaction\Parameters\Account $account) {
-   $this->account = $account;
-  } 
-
-
-  /**
-   * @return Transaction\Parameters\Account 
-   */
-  public function getAccount() {
-    return $this->account;
-  } 
 }

@@ -9,18 +9,17 @@ trait Configurable {
    **/
   public function setConfig($config) {
     foreach ($config as $key => $val) {
+      $orgVal = $val;
+
       if (is_array($val)) {
-        $className = "\\Pwintermantel\\LibHeidelpay\\Transaction\\Parameters\\" . $this->normalizeKey($key);
-        $orgVal = $val;
-        $val = new $className();
-        $val->setConfig($orgVal);
-      } 
-      $this->{'set' . $this->normalizeKey($key)}($val);
+        if (null === $this->{$key}) {
+          $className = "\\Pwintermantel\\LibHeidelpay\\Transaction\\Parameters\\" . ucfirst($key);
+          $this->{$key} = new $className();
+        } 
+        $this->{$key}->setConfig($orgVal);
+      } else {
+        $this->{$key} = $val;
+      }
     }
   }
-
-  private function normalizeKey($key) {
-     return ucfirst(strtolower(trim($key)));
-  }
-  
 }
