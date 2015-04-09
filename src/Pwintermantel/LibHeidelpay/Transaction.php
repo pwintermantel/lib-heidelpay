@@ -82,11 +82,35 @@ class Transaction {
    */
   var $transaction = null;
 
+  
+  /**
+   * @var Transaction\Parameters\User
+   */
+  var $user = null;
+
+
 
   /**
    * @var \GuzzleHttp\Client
    */
   var $httpClient = null;
+
+
+  /** 
+   * @var string
+   */
+  var $responseStatusCode = null;
+  
+  /** 
+   * @var string
+   */
+  var $responseRawBody = null;
+  
+
+  /**
+   * @var string
+   **/
+  var $processingResult = null;
 
   /**
    * @param array $config Configuration Array
@@ -100,9 +124,21 @@ class Transaction {
   }
 
 
-  public function send() {
+  public function post() {
     $client = $this->getHttpClient();
-    $this->collectParams();
+    $response = $client->post($this->endpointUrl, ['body' => $this->collectParams()]);
+    $this->responseRawBody = $response->getBody();
+    $this->responseStatusCode = $response->getStatusCode();
+    $this->parsePostResponse($response->getBody());
+  }
+
+
+  private function parsePostResponse($body) {
+    $data = '';
+    parse_str($body, $data);
+    $this->processingResult = $data['PROCESSING_RESULT'];
+    $this->postValidation   = $data['POST_VALIDATION'];
+    $this->frontend->redirect_url = $data['FRONTEND_REDIRECT_URL'];
   }
 
 

@@ -6,7 +6,7 @@ namespace Pwintermantel\LibHeidelpay\Transaction\Parameters;
  *
  */
 
-class Request extends AbstractParameters implements ParametersInterface {
+class User extends AbstractParameters implements ParametersInterface {
 
   use \Pwintermantel\LibHeidelpay\Behavior\Postable;
   use \Pwintermantel\LibHeidelpay\Behavior\Configurable;
@@ -14,6 +14,10 @@ class Request extends AbstractParameters implements ParametersInterface {
   /**
    * @var string 
    */
-  var $version = '1.0';
-}
+  var $login;
 
+  /**
+   * @var string 
+   */
+  var $pwd;
+}

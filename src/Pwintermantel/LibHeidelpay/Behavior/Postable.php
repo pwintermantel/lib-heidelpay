@@ -7,7 +7,9 @@ trait Postable {
     $glue   = '.';
     $out    = [];
     foreach (get_object_vars($this) as $key => $val) {
-        $out[$prefix . $glue . strtoupper($key)] = $val;
+        if (null !== $val) {
+          $out[$prefix . $glue . strtoupper($key)] = $val;
+        }
     }
     return $out;
   }
