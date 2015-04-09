@@ -1,5 +1,5 @@
 <?php
-  require_once 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
   
 $returnvalue=$_POST['PROCESSING_RESULT'];
 
@@ -10,12 +10,12 @@ file_put_contents('result.json', json_encode($_POST));
 if (strstr($returnvalue,"ACK"))
 {
 // URL after successful transacvtion (change the URL to YOUR success page: e.g. return to shopping)
-print "http://95.208.224.17/index.php?status=true";
+print "http://domain/index.php?status=true";
 
 }
 else
 {
-print "http://95.208.224.17/index.php?status=false";
+print "http://domain/index.php?status=false";
 // URL error in transaction (change the URL to YOUR error page)
 }
 exit;
@@ -36,8 +36,8 @@ if ($_GET['status']) {
         'contact'     => ['email' => 'mm@bla.com'],
         'frontend'    => [
                             'enabled' => 'true',
-                            'response_url' => 'http://95.208.224.17/index.php?response=true',
-                            'shop_name' => 'kreawi Online Portal',
+                            'response_url' => 'http://domain/index.php?response=true',
+                            'shop_name' => 'fooshop',
                             'language_selector' => 'false',
                             'language' => 'de',
                             'popup' => 'false'
@@ -56,34 +56,4 @@ if ($_GET['status']) {
   if ($t->postValidation === 'ACK') {
     header ("Location: {$t->frontend->redirect_url}");
   }
-  exit;
-
-
-
-  $result = '';
-  foreach ($t->collectParams() AS $key => $value)
-$result .= strtoupper($key).'='.urlencode($value).'&';
-$strPOST = stripslashes($result);
-
-echo $strPOST;
-
-//open the request url for the Web Payment Frontend
-
-$cpt = curl_init();
-curl_setopt($cpt, CURLOPT_URL, $t->endpointUrl);
-curl_setopt($cpt, CURLOPT_SSL_VERIFYHOST, 2);
-curl_setopt($cpt, CURLOPT_USERAGENT, "php ctpepost");
-curl_setopt($cpt, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($cpt, CURLOPT_SSL_VERIFYPEER, FALSE);
-curl_setopt($cpt, CURLOPT_POST, 1);
-curl_setopt($cpt, CURLOPT_POSTFIELDS, $strPOST);
-$curlresultURL = curl_exec($cpt);
-$curlerror = curl_error($cpt);
-$curlinfo = curl_getinfo($cpt);
-curl_close($cpt);
-var_dump($returnvalue, $curlresultURL, $curlerror, $curlinfo);
-
-// here you can get all variables returned from the ctpe server (see post integration transactions documentation for help)
-//print $strPOST;
-// parse results
-
+exit;
