@@ -15,6 +15,10 @@ trait Postable {
   }
 
 
+ 
+
+
+
   public function collectParams() {
     $out = [];
     foreach (get_object_vars($this) as $key => $val) {

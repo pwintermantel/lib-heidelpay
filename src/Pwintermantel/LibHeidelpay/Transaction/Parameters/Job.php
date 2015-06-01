@@ -6,29 +6,39 @@ namespace Pwintermantel\LibHeidelpay\Transaction\Parameters;
  *
  */
 
-class Presentation extends AbstractParameters implements ParametersInterface {
+class Job extends AbstractParameters implements ParametersInterface {
 
   use \Pwintermantel\LibHeidelpay\Behavior\Postable;
   use \Pwintermantel\LibHeidelpay\Behavior\Configurable;
  
+  /**
+   * @var string 
+   */
+  var $name;
+ 
+  /**
+   * @var string 
+   */
+  var $action;
+  
+  /**
+   * @var string 
+   */
+  var $start;
 
   /**
    * @var string 
    */
-  var $currency;
- 
+  var $end;
 
-  /**
-   * @var float
-   */
-  var $amount;
 
   /**
    * @var string
    */
-  var $usage;
+  var $execution_dayofmonth; 
+
+  /**
+   * @var string
+   */
+  var $execution_hour; 
 }
-
-
-
-
