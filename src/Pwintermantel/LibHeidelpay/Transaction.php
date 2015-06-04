@@ -189,6 +189,7 @@ class Transaction {
 
     $identification = $t->addChild('Identification');
     $identification->addChild('TransactionID', $this->identification->transactionid);
+    $identification->addChild('ReferenceID', $this->identification->referenceid);
 
     $account = $t->addChild('Account');
     $account->addAttribute('registration', $this->account->uniqueid);
