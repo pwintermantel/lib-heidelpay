@@ -16,4 +16,9 @@ class Account extends AbstractParameters implements ParametersInterface {
    */
   var $holder;
  
+  /**
+   * @var string 
+   */
+  var $registration;
+
 }
