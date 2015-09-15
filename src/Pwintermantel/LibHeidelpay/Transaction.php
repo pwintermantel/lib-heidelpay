@@ -148,9 +148,9 @@ class Transaction {
   }
 
 
-  public function post() {
+  public function post($rawOverrides = []) {
     $client = $this->getHttpClient();
-    $this->payloadArray = $this->collectParams();
+    $this->payloadArray = array_merge($this->collectParams(), $rawOverrides);
      
     $response = $client->post($this->endpointUrl . $this->postGatewaySuffix, [
       'headers' => ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'],
