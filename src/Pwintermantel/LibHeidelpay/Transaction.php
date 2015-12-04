@@ -123,12 +123,12 @@ class Transaction {
   /**
    * @var string
    */
-  var $xmlGatewaySuffix = 'xml';
+  var $xmlGatewaySuffix = 'sgw/xml';
 
   /**
    * @var string
    */
-  var $postGatewaySuffix = 'gtwu';
+  var $postGatewaySuffix = 'sgw/gtwu';
 
 
   /**

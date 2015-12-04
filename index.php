@@ -30,7 +30,7 @@ if ($_GET['status']) {
   $t = new Pwintermantel\LibHeidelpay\Transaction;
 
   $conf = [
-        'endpointUrl' => 'https://test-heidelpay.hpcgw.net/sgw/gtw',
+        'endpointUrl' => 'https://test-heidelpay.hpcgw.net/',
         'account'     => ['holder' => ''],
         'address'     => ['street' => 'foo', 'city' => 'foo', 'zip' => '123', 'country' => 'DE'],
         'contact'     => ['email' => 'mm@bla.com'],
