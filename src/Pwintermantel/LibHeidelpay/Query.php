@@ -13,6 +13,7 @@ class Query {
 
 
   const QUERY_TYPE_STANDARD = 'STANDARD';
+  const TRANSACTION_TYPE_PAYMENT = 'PAYMENT';
   const QUERY_TYPE_LINKED_TRANSACTIONS = 'LINKED_TRANSACTIONS';
   const QUERY_TYPE_AVAILABLE_TRANSACTIONS = 'AVAILABLE_TRANSACTIONS';
   const QUERY_TYPE_ACTIVE_LINKED_TRANSACTIONS = 'ACTIVE_LINKED_TRANSACTIONS';
@@ -62,6 +63,12 @@ class Query {
    */
   var $user = null;
 
+  
+  
+  /**
+   * @var Transaction\Parameters\Types
+   */
+  var $types = null;
 
   /**
    * @var string
@@ -178,6 +185,13 @@ class Query {
 
     $identification = $query->addChild('Identification');
     $identification->addChild('UniqueID', $this->identification->uniqueid);
+
+
+    if ($this->types) {
+      $types =  $query->addChild('Types');
+      $type = $types->addChild('Type');
+      $type->addAttribute('code', $this->types->code);
+    }
 
     $period = $query->addChild('Period');
     $period->addAttribute('from', $this->periodFrom->format("Y-m-d"));
