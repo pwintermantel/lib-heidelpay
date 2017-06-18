@@ -14,16 +14,12 @@ trait Postable {
     return $out;
   }
 
-
- 
-
-
-
   public function collectParams() {
     $out = [];
     foreach (get_object_vars($this) as $key => $val) {
       if (is_object($val) && method_exists($val, 'getParams')) {
-        $out = array_merge($out, $val->getParams());
+        $params = $val->getParams(); 
+        $out = array_merge($out, $params);
       } 
     }
     return $out; 
