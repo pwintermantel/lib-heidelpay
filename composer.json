@@ -2,7 +2,7 @@
     "name": "pwintermantel/lib-heidelpay",
     "description": "Wrapper for Heidelpay Payment Service",
     "require": {
-        "guzzlehttp/guzzle": "~5.2"
+        "guzzlehttp/guzzle": "*"
     },
     "require-dev": {
         "codeception/codeception": "~2.0"
