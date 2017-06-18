@@ -3,13 +3,20 @@ namespace Pwintermantel\LibHeidelpay\Behavior;
 
 trait Postable {
   public function getParams() {
-    $prefix = strtoupper(isset($this->postPrefix) ? $this->postPrefix : end(explode('\\', get_class($this))));
+    if (strtoupper(isset($this->postPrefix))) {
+      $prefix = $this->postPrefix;
+    } else {
+      $class = get_class($this);
+      $classParts = explode('\\', $class);
+      $prefix = end($classParts);
+    }
+
     $glue   = '.';
     $out    = [];
     foreach (get_object_vars($this) as $key => $val) {
-        if (null !== $val) {
-          $out[$prefix . $glue . strtoupper($key)] = $val;
-        }
+      if (null !== $val) {
+        $out[$prefix . $glue . strtoupper($key)] = $val;
+      }
     }
     return $out;
   }
