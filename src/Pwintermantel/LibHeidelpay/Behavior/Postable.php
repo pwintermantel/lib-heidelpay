@@ -3,7 +3,7 @@ namespace Pwintermantel\LibHeidelpay\Behavior;
 
 trait Postable {
   public function getParams() {
-    if (strtoupper(isset($this->postPrefix))) {
+    if (isset($this->postPrefix)) {
       $prefix = $this->postPrefix;
     } else {
       $class = get_class($this);
@@ -15,7 +15,7 @@ trait Postable {
     $out    = [];
     foreach (get_object_vars($this) as $key => $val) {
       if (null !== $val) {
-        $out[$prefix . $glue . strtoupper($key)] = $val;
+        $out[strtoupper($prefix) . $glue . strtoupper($key)] = $val;
       }
     }
     return $out;
