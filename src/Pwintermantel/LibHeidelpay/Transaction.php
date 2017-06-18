@@ -154,7 +154,7 @@ class Transaction {
      
     $response = $client->post($this->endpointUrl . $this->postGatewaySuffix, [
       'headers' => ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'],
-    'body' => $this->payloadArray]);
+      'form_params' => $this->payloadArray]);
     $this->responseRawBody = (string) $response->getBody();
     $this->responseStatusCode = $response->getStatusCode();
     $this->parsePostResponse($response->getBody());
@@ -165,7 +165,7 @@ class Transaction {
     $client = $this->getHttpClient();
     $this->payloadArray = ['load' => $this->buildXml()];
 
-    $response = $client->post($this->endpointUrl . $this->xmlGatewaySuffix, ['body' => $this->payloadArray, 'headers' => ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8']]);
+    $response = $client->post($this->endpointUrl . $this->xmlGatewaySuffix, ['form_params' => $this->payloadArray, 'headers' => ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8']]);
     $this->responseRawBody = (string) $response->getBody();
     $this->responseStatusCode  = $response->getStatusCode();
     $this->parseXmlResponse($response->getBody());
