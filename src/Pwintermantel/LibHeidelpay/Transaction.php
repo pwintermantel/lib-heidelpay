@@ -1,6 +1,9 @@
 <?php
 namespace Pwintermantel\LibHeidelpay;
 
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Middleware;
+
 /**
  * @author Philipp Wintermantel <philipp@wintermantel.org>
  *
@@ -151,13 +154,26 @@ class Transaction {
   public function post($rawOverrides = []) {
     $client = $this->getHttpClient();
     $this->payloadArray = array_merge($this->collectParams(), $rawOverrides);
-     
+
+    // Grab the client's handler instance.
+    $clientHandler = $client->getConfig('handler');
+    // Create a middleware that echoes parts of the request.
+    $tapMiddleware = Middleware::tap(function ($request) {
+      // application/json
+      echo $request->getBody();
+      // {"foo":"bar"}
+    });
+
     $response = $client->post($this->endpointUrl . $this->postGatewaySuffix, [
-      'headers' => ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'],
-      'form_params' => $this->payloadArray]);
-    $this->responseRawBody = (string) $response->getBody();
-    $this->responseStatusCode = $response->getStatusCode();
-    $this->parsePostResponse($response->getBody());
+    'headers' => ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'],
+    'form_params' => $this->payloadArray,
+   // 'handler' => $tapMiddleware($clientHandler)
+      ]
+  );
+
+  $this->responseRawBody = (string) $response->getBody();
+  $this->responseStatusCode = $response->getStatusCode();
+  $this->parsePostResponse($response->getBody());
   }
 
 
@@ -206,12 +222,12 @@ class Transaction {
     }
     $payment = $t->addChild('Payment');
     $payment->addAttribute('code', $this->payment->code);
-    
+
     $presentation = $payment->addChild('Presentation');
     $presentation->addChild('Amount', $this->presentation->amount);
     $presentation->addChild('Currency', $this->presentation->currency);
     $presentation->addChild('Usage', $this->presentation->usage);
-    
+
 
     $job->addChild('Action')->addAttribute('type', 'DB');
 
@@ -221,16 +237,16 @@ class Transaction {
     $execution->addChild('Month', $this->job->execution_month);
 
     /*
-    $notice = $job->addChild('Notice');
-    $notice->addChild('Number', 1);
-    $notice->addChild('Unit', 'WEEK');
-    */
+     $notice = $job->addChild('Notice');
+     $notice->addChild('Number', 1);
+     $notice->addChild('Unit', 'WEEK');
+     */
     /* 
-    $duration = $job->addChild('Duration');
-    $duration->addChild('Number', 3);
-    $duration->addChild('Unit', 'MONTH');
-    */
-    return str_replace('<?xml version="1.0"?>', '<?xml version="1.0" encoding="UTF-8"?>', $xml->asXml());
+     $duration = $job->addChild('Duration');
+     $duration->addChild('Number', 3);
+     $duration->addChild('Unit', 'MONTH');
+     */
+  return str_replace('<?xml version="1.0"?>', '<?xml version="1.0" encoding="UTF-8"?>', $xml->asXml());
   }
 
   private function parsePostResponse($body) {
@@ -242,7 +258,7 @@ class Transaction {
     $this->frontend->redirect_url = $data['FRONTEND_REDIRECT_URL'];
   }
 
-  
+
   private function parseXmlResponse($body) {
     $data = new \SimpleXMLElement($body); 
     $this->responseData     = $data;
