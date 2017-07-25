@@ -6,9 +6,9 @@ trait Postable {
     if (isset($this->postPrefix)) {
       $prefix = $this->postPrefix;
     } else {
-       $class = get_class($this);
-       $classParts = explode('\\', $class);
-       $prefix = end($classParts);
+      $class = get_class($this);
+      $classParts = explode('\\', $class);
+      $prefix = end($classParts);
     }
     $glue   = '.';
     $out    = [];
